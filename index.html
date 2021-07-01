@@ -162,31 +162,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="1、题目要求"><a href="#1、题目要求" class="headerlink" title="1、题目要求"></a>1、题目要求</h3><p>给定一个整数数组nums和一个整数目标值target，请你在该数组中找出和为目标值target的那两个整数，并返回它们的数组下标。</p>
-<h3 id="2、解题思路"><a href="#2、解题思路" class="headerlink" title="2、解题思路"></a>2、解题思路</h3><p>使用暴力破解法对nums数组进行嵌套循环遍历，直到找到等于目标值target的两个整数的下标，然后输出对应下标组成的数组，若未找到两个整数可以等于target，则返回空数组。</p>
-<h3 id="3、代码"><a href="#3、代码" class="headerlink" title="3、代码"></a>3、代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int* twoSum(int* nums, int numsSize, int target, int* returnSize)&#123;</span><br><span class="line">    int *result &#x3D; (int *)calloc(2, sizeof(int)); &#x2F;&#x2F;动态分配连续2个int类型的内存块</span><br><span class="line">    for (int i &#x3D; 0; i &lt; numsSize - 1; i++) &#123;</span><br><span class="line">        for (int j &#x3D; i + 1; j &lt; numsSize; j++) &#123;</span><br><span class="line">            if (nums[i] + nums[j] &#x3D;&#x3D; target) &#123;</span><br><span class="line">                result[0] &#x3D; i;</span><br><span class="line">                result[1] &#x3D; j;</span><br><span class="line">                * returnSize &#x3D; 2; </span><br><span class="line">                return result;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    * returnSize &#x3D; 0;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4、tips："><a href="#4、tips：" class="headerlink" title="4、tips："></a>4、tips：</h3><p>C语言中使用malloc()、calloc()、free()和realloc()进行动态内存分配，它们的区别如下(数组是存储在连续内存位置的项目的集合)：<br></p>
-<p>1、malloc()方法用于动态分配具有指定大小的单个大内存快，它返回一个void类型的指针，该指针可以转换为任何形式的指针。它默认垃圾值初始化每个块。</p>
-句法：
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptr &#x3D; (cast-type*)malloc(byte-size)</span><br></pre></td></tr></table></figure>
-
-<p>2、calloc()方法用于动态分配指定数量的指定类型的内存块，它使用默认值“0”初始化每个块。</p>
-句法：
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptr &#x3D; (cast-type)calloc(n, element-size)</span><br></pre></td></tr></table></figure>
-
-<p>3、使用函数 malloc() 和 calloc() 分配的内存不会自行解除分配。因此，无论何时发生动态内存分配，都会使用 free() 方法。它有助于通过释放内存来减少内存浪费。</p>
-句法：
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free(ptr)</span><br></pre></td></tr></table></figure>
-
-<p>4、realloc()用于动态更改先前分配的内存的内存分配。换句话说，如果之前借助 malloc或calloc分配的内存不足，可以使用realloc动态重新分配内存。内存的重新分配保持已经存在的值，新块将使用默认垃圾值初始化。</p>
-句法：
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptr &#x3D; realloc(ptr, newSize);&#x2F;&#x2F;ptr用新大小newSize重新分配</span><br></pre></td></tr></table></figure>
-
-
+        
+          <a class="article-more-a" href="/2021/07/01/day01%E2%80%94%E2%80%94%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/#more">more >></a>
+        
       
 
       
@@ -615,11 +593,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">百度地图api</a>
+                <a href="javascript:void(0)" class="js-tag color3">微信公众号开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">微信公众号开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">百度地图api</a>
               </li>
             
             <div class="clearfix"></div>
