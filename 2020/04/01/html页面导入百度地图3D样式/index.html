@@ -71,6 +71,8 @@
 			
 				<li><a href="/">主页</a></li>
 	        
+				<li><a href="/categories/index.html">分类</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -85,13 +87,29 @@
             
 		</nav>
 		<nav class="header-nav">
-			<div class="social">
-				
-					<a class="github" target="_blank" href="https://github.com/CodeMarkBeginner" title="github"><i class="icon-github"></i></a>
-		        
-					<a class="mail" target="_blank" href="mailto:pslab_wanglong@163.com" title="mail"><i class="icon-mail"></i></a>
-		        
-			</div>
+    			<div class="social">
+        				
+            				<a class="github" target="_blank" href="https://github.com/WangLong2k0307" title="github"><i class="icon-github"></i></a>
+        				
+            				<a class="mail" target="_blank" href="mailto:pslab_wanglong@163.com" title="mail"><i class="icon-mail"></i></a>
+        				
+    			</div>
+
+    			
+    			<!--音乐播放插件-->
+      				<div style="margin-top:30px;">
+        					<iframe
+          				   frameborder="no"
+          				   border="0"
+          				   marginwidth="0"
+          				   marginheight="0"
+          				   width="240"
+          				   height="52"
+          				   src="//music.163.com/outchain/player?type=2&amp;id=191303&amp;auto=1&amp;height=66"
+        					>
+        					</iframe>
+      				</div>
+    			
 		</nav>
 	</header>		
 </div>
@@ -117,12 +135,14 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="https://github.com/CodeMarkBeginner" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="https://github.com/WangLong2k0307" title="github"><i class="icon-github"></i></a>
 			        
 						<a class="mail" target="_blank" href="mailto:pslab_wanglong@163.com" title="mail"><i class="icon-mail"></i></a>
 			        
@@ -133,7 +153,9 @@
 				<ul style="width: 50%">
 				
 				
-					<li style="width: 100%"><a href="/">主页</a></li>
+					<li style="width: 50%"><a href="/">主页</a></li>
+		        
+					<li style="width: 50%"><a href="/categories/index.html">分类</a></li>
 		        
 				</ul>
 			</nav>
@@ -295,6 +317,19 @@
         </div>
         
         
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、首先在百度地图平台申请一个密钥AK，网址：http-lbsyun-baidu-com-apiconsole-key"><span class="toc-number">1.</span> <span class="toc-text">1、首先在百度地图平台申请一个密钥AK，网址：http:&#x2F;&#x2F;lbsyun.baidu.com&#x2F;apiconsole&#x2F;key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、页面中引用百度地图3D模型"><span class="toc-number">2.</span> <span class="toc-text">2、页面中引用百度地图3D模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、地图显示"><span class="toc-number">3.</span> <span class="toc-text">3、地图显示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、向地图中添加标记点，并点击时显示标注信息"><span class="toc-number">4.</span> <span class="toc-text">4、向地图中添加标记点，并点击时显示标注信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、完整代码"><span class="toc-number">5.</span> <span class="toc-text">5、完整代码</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
     </div>
 </aside>
 
@@ -308,22 +343,6 @@
 
   
 
-  
-  <div id="gitment-ctn"></div> 
-<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
-<script src="https://www.wenjunjiang.win/js/gitment.js"></script>
-<script>
-var gitment = new Gitment({
-  id: "http://yoursite.com/2020/04/01/html%E9%A1%B5%E9%9D%A2%E5%AF%BC%E5%85%A5%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BE3D%E6%A0%B7%E5%BC%8F/",
-  owner: 'CodeMarkBeginner',
-  repo: 'codemarkbeginner.github.io',
-  oauth: {
-    client_id: '04a5a5dd7dde0f2566d2',
-    client_secret: '1ced23f479b87b1aba201df3419329c1bdb132b7',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
   
 
 
@@ -444,6 +463,14 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">百度地图api</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">微信公众号开发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">C</a>
               </li>
              
@@ -453,14 +480,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">pytorch</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">百度地图api</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">微信公众号开发</a>
               </li>
             
             <div class="clearfix"></div>
