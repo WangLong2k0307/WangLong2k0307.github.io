@@ -6,16 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | 王龙的个人博客</title>
+  <title>推荐系统负样本采样和构造 | 王龙的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="王龙的个人博客">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+  <meta name="description" content="推荐算法中主要包括两部分算法，即召回算法和排序算法。召回算法中大多数通过只使用user id和item id来实现，而召回算法中最为关键的阶段是负采样阶段。下面为负采样的一些概念： 1、定义首先介绍一下负样本，负样本一般为用户未交互的物品，或者为用户的评价值小于一定阈值的物品。而负采样即从用户user未交互的物品item中基于一定策略进行负样本筛选。 2、目的 平衡正负样本的比例  筛选出信息量更">
+<meta property="og:type" content="article">
+<meta property="og:title" content="推荐系统负样本采样和构造">
+<meta property="og:url" content="http://yoursite.com/2023/02/20/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E8%B4%9F%E6%A0%B7%E6%9C%AC%E9%87%87%E6%A0%B7%E5%92%8C%E6%9E%84%E9%80%A0/index.html">
 <meta property="og:site_name" content="王龙的个人博客">
+<meta property="og:description" content="推荐算法中主要包括两部分算法，即召回算法和排序算法。召回算法中大多数通过只使用user id和item id来实现，而召回算法中最为关键的阶段是负采样阶段。下面为负采样的一些概念： 1、定义首先介绍一下负样本，负样本一般为用户未交互的物品，或者为用户的评价值小于一定阈值的物品。而负采样即从用户user未交互的物品item中基于一定策略进行负样本筛选。 2、目的 平衡正负样本的比例  筛选出信息量更">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2023/02/20/EHiA7rcOLXUjJFG.png">
+<meta property="article:published_time" content="2023-02-20T12:50:22.552Z">
+<meta property="article:modified_time" content="2023-02-20T12:49:20.222Z">
 <meta property="article:author" content="王龙">
+<meta property="article:tag" content="推荐系统">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/02/20/EHiA7rcOLXUjJFG.png">
   
     <link rel="alternative" href="/atom.xml" title="王龙的个人博客" type="application/atom+xml">
   
@@ -161,181 +168,201 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-推荐系统负样本采样和构造" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      推荐系统负样本采样和构造
+    </h1>
+  
+
+	
+        
+        <a href="/2023/02/20/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E8%B4%9F%E6%A0%B7%E6%9C%AC%E9%87%87%E6%A0%B7%E5%92%8C%E6%9E%84%E9%80%A0/" class="archive-article-date">
+  	<time datetime="2023-02-20T12:50:22.552Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-02-20</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>推荐算法中主要包括两部分算法，即召回算法和排序算法。召回算法中大多数通过只使用user id和item id来实现，而召回算法中最为关键的阶段是负采样阶段。下面为负采样的一些概念：</p>
+<h4 id="1、定义"><a href="#1、定义" class="headerlink" title="1、定义"></a>1、定义</h4><p>首先介绍一下负样本，负样本一般为用户未交互的物品，或者为用户的评价值小于一定阈值的物品。而负采样即从用户user未交互的物品item中基于一定策略进行负样本筛选。</p>
+<h4 id="2、目的"><a href="#2、目的" class="headerlink" title="2、目的"></a>2、目的</h4><ol>
+<li><p>平衡正负样本的比例</p>
+</li>
+<li><p>筛选出信息量更高的负样本</p>
+</li>
+<li><p>可以消除样本偏差</p>
+</li>
+<li><p>负采样可以降低由于数据量大产生的内存和训练时长的问题</p>
+</li>
+</ol>
+<h4 id="3、方法"><a href="#3、方法" class="headerlink" title="3、方法"></a>3、方法</h4><ol>
+<li><p>随机采样+热门打压（基于Popularity随机选择负例）</p>
+<p>大多数召回算法中都采用了这种方法，首先在整个候选集中“随机采样”，但由于所谓的“随机采样”往往不是等概率采样，而会抽取其中热门的物品。如果直接“随机采样”的话，往往会导致所有人召回结果都集中于热门物品，进而就使算法失去了个性化。故当前大多数算法往往采用随机采样+热门打压。</p>
+<p>所谓的热门打压包括两部分，其中当热门物品做正样本时，要降采样，减少对正样本集的绑架；而对于热门物品做负样本时，要适当过采样，抵消热门物品对正样本集的绑架，同时保证冷门物品在负样本集中有出现的机会，具体的某物品成为负样本的概率为：<br>$$<br>P_{neg}=\frac{n(w_i)^\alpha}{\sum_jn(w_j)^\alpha}<br>$$<br>其中n(w)是第i个物品的出现次数，α一般取0.75。具体的负采样过程代码如下所示，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按照user_popularity随机挑选正样本</span></span><br><span class="line">u = np.random.choice(self.numUsers, p=self.user_popularity)</span><br><span class="line">cu = self.userCache[u]</span><br><span class="line"><span class="keyword">if</span> len(cu) == <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">t = np.random.choice(len(cu))</span><br><span class="line">i = cu[t]</span><br><span class="line">ci = self.itemCache[i]</span><br><span class="line"><span class="keyword">if</span> len(ci) == <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line"><span class="comment"># 按照item_popularity随机挑选负样本</span></span><br><span class="line">j = np.random.choice(np.arange(self.numItems), p=self.item_popularity)</span><br><span class="line"><span class="keyword">while</span> j <span class="keyword">in</span> cu <span class="keyword">or</span> j <span class="keyword">not</span> <span class="keyword">in</span> trainItems:</span><br><span class="line">    j = np.random.choice(np.arange(self.numItems), p=self.item_popularity)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在与正样本相同类别中挑选负样本</p>
+<p>这种方法的主要流程如下图所示，</p>
+<p><img src="https://s2.loli.net/2023/02/20/EHiA7rcOLXUjJFG.png" alt="image-20230220200905212"></p>
+<p>其大体思想为一小部分采样与同一类别中，其他使用第一种方法（随机采样）进行采样，而代码如下所示，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">j = <span class="number">0</span></span><br><span class="line">item_categorys = self.get_keys(categorys, i, ci)</span><br><span class="line">r = np.random.uniform()</span><br><span class="line"><span class="keyword">if</span> r &lt; <span class="number">0.5</span>:</span><br><span class="line">    j = np.random.choice(item_categorys)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    j = np.random.choice(np.arange(self.numItems), p=self.item_popularity)</span><br><span class="line"><span class="comment"># 当j在用户u的训练集中交互的物品集合中或者不在训练集中item集合中重新采负样本</span></span><br><span class="line">    <span class="keyword">while</span> j <span class="keyword">in</span> cu <span class="keyword">or</span> j <span class="keyword">not</span> <span class="keyword">in</span> trainItems:</span><br><span class="line">        j = np.random.choice(np.arange(self.numItems), p=self.item_popularity)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>batch内随机选择负例</p>
+<p>训练时在同一个batch中，除了正例之外的其他物品，选择构造负例。</p>
+</li>
+<li><p>全局随机选择负例</p>
+<p>在原始的全部数据集中，随机抽取负样本。</p>
+</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/11/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7java%E5%BC%80%E5%8F%91/" class="archive-article-date">
-  	<time datetime="2020-07-11T10:20:27.786Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/11/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7java%E5%BC%80%E5%8F%91/">微信公众号java开发</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">javaweb</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">微信公众号开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">推荐系统</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/javaweb//" class="article-tag-list-link color3">javaweb</a>
+        			<a href="/categories/推荐系统//" class="article-tag-list-link color5">推荐系统</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2023/02/20/%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E8%B4%9F%E6%A0%B7%E6%9C%AC%E9%87%87%E6%A0%B7%E5%92%8C%E6%9E%84%E9%80%A0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/08/Junit%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" class="archive-article-date">
-  	<time datetime="2020-04-08T03:32:34.851Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-08</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2023/02/19/pytorch%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">零基础构建pytorch算法流程</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/08/Junit%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">Junit单元测试</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">junit</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/java//" class="article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、定义"><span class="toc-number">1.</span> <span class="toc-text">1、定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、目的"><span class="toc-number">2.</span> <span class="toc-text">2、目的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3、方法"><span class="toc-number">3.</span> <span class="toc-text">3、方法</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/01/html%E9%A1%B5%E9%9D%A2%E5%AF%BC%E5%85%A5%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BE3D%E6%A0%B7%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-04-01T14:46:58.037Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/01/html%E9%A1%B5%E9%9D%A2%E5%AF%BC%E5%85%A5%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BE3D%E6%A0%B7%E5%BC%8F/">前端页面如何导入百度地图3D样式,并在地图上标记地址</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">javaweb</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">百度地图api</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/javaweb//" class="article-tag-list-link color3">javaweb</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -362,8 +389,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
