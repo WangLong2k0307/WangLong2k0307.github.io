@@ -6,18 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>回文数判断 | 王龙的个人博客</title>
+  <title>罗马数字转整数 | 王龙的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta name="description" content="1、要求给定一个整数x，如果x是一个回文整数，返回true；否则，返回false。  回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。例如，121是回文，而123不是回文。">
+  <meta name="description" content="一、要求给定一个罗马数字，将其转换为整数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="回文数判断">
-<meta property="og:url" content="http://yoursite.com/2023/02/27/001%E5%9B%9E%E6%96%87%E6%95%B0/index.html">
+<meta property="og:title" content="罗马数字转整数">
+<meta property="og:url" content="http://yoursite.com/2023/03/01/002%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/index.html">
 <meta property="og:site_name" content="王龙的个人博客">
-<meta property="og:description" content="1、要求给定一个整数x，如果x是一个回文整数，返回true；否则，返回false。  回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。例如，121是回文，而123不是回文。">
+<meta property="og:description" content="一、要求给定一个罗马数字，将其转换为整数。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-02-27T08:54:36.452Z">
-<meta property="article:modified_time" content="2023-02-27T08:49:27.638Z">
+<meta property="article:published_time" content="2023-03-01T07:03:56.605Z">
+<meta property="article:modified_time" content="2023-03-01T07:02:00.122Z">
 <meta property="article:author" content="王龙">
 <meta property="article:tag" content="leetcode">
 <meta property="article:tag" content="java">
@@ -167,42 +167,35 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-001回文数" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-002罗马数字转整数" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      回文数判断
+      罗马数字转整数
     </h1>
   
 
 	
         
-        <a href="/2023/02/27/001%E5%9B%9E%E6%96%87%E6%95%B0/" class="archive-article-date">
-  	<time datetime="2023-02-27T08:54:36.452Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-02-27</time>
+        <a href="/2023/03/01/002%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/" class="archive-article-date">
+  	<time datetime="2023-03-01T07:03:56.605Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-03-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="1、要求"><a href="#1、要求" class="headerlink" title="1、要求"></a>1、要求</h4><p>给定一个整数x，如果x是一个回文整数，返回true；否则，返回false。</p>
-<ul>
-<li>回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。例如，121是回文，而123不是回文。</li>
-</ul>
+        <h3 id="一、要求"><a href="#一、要求" class="headerlink" title="一、要求"></a>一、要求</h3><p>给定一个罗马数字，将其转换为整数。</p>
 <a id="more"></a>
 
-<h4 id="2、题解"><a href="#2、题解" class="headerlink" title="2、题解"></a>2、题解</h4><p>1、简单做法</p>
-<p>此做法主要是首先将整数转化为字符串类型，然后再转化为字符数组，最后从前向后与从后向前同时遍历，看是否相等，若出现不等则不是回文数。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 负数必不是回文数</span></span><br><span class="line">        <span class="keyword">if</span> (x &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 将整数转化为字符串类型</span></span><br><span class="line">        String s = String.valueOf(x);</span><br><span class="line">        <span class="comment">//将字符串类型转化为字符数组</span></span><br><span class="line">        <span class="keyword">char</span>[] chars = s.toCharArray();</span><br><span class="line">        <span class="comment">//从前向后与从后向前同时遍历，判断是否相等</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; chars.length / <span class="number">2</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (chars[i] != chars[chars.length - <span class="number">1</span> - i]) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2、进阶做法</p>
-<p>此做法首先确定0为回文数，然后判断负数和尾数为0 的数都不是回文数，最后通过将整数的后一半翻转后与前一半数进行判断是否一样，若一样则为回文数，反而则不是回文数。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 0是回文数</span></span><br><span class="line">        <span class="keyword">if</span> (x == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 负数和尾数为0的数都不是回文数</span></span><br><span class="line">        <span class="keyword">if</span> ( x &lt; <span class="number">0</span> || x % <span class="number">10</span> == <span class="number">0</span>) &#123; </span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> reversed = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// reversed记录的是x后一半位的数字的翻转</span></span><br><span class="line">        <span class="keyword">while</span> (x &gt; reversed) &#123;</span><br><span class="line">            reversed = reversed * <span class="number">10</span> + x % <span class="number">10</span>;</span><br><span class="line">            x /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 此处主要分奇数位数和偶数位数情况</span></span><br><span class="line">        <span class="keyword">return</span> x == reversed || x == reversed / <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>罗马数字总共包括七种字符：I、V、X、L、C、D和M。其中I对应的是1，V对应的是5，X对应的是10，L对应的是50，C对应的是100，D对应的是500， M对应的是1000。通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 <code>IIII</code>，而是 <code>IV</code>。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为 <code>IX</code>。</li>
+</ul>
+<h3 id="二、题解"><a href="#二、题解" class="headerlink" title="二、题解"></a>二、题解</h3><p>首先创建一个HashMap，然后将七个字符和对应的整数放进map中，随后将输入的罗马数字转换成字符数组，最后进行遍历数组。具体的遍历数组过程中，首先定义一个变量存储最后的和值，然后在遍历过程中，若某位置的罗马字母对应的整数小于后一个位置的，则和值减去该值，反之则加上该值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">romanToInt</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    	<span class="comment">// 创建map</span></span><br><span class="line">        HashMap&lt;Character,Integer&gt; h = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        h.put(<span class="string">'I'</span>,<span class="number">1</span>);</span><br><span class="line">        h.put(<span class="string">'V'</span>,<span class="number">5</span>);</span><br><span class="line">        h.put(<span class="string">'X'</span>,<span class="number">10</span>);</span><br><span class="line">        h.put(<span class="string">'L'</span>,<span class="number">50</span>);</span><br><span class="line">        h.put(<span class="string">'C'</span>,<span class="number">100</span>);</span><br><span class="line">        h.put(<span class="string">'D'</span>,<span class="number">500</span>);</span><br><span class="line">        h.put(<span class="string">'M'</span>,<span class="number">1000</span>);</span><br><span class="line">        <span class="keyword">char</span>[] s_char = s.toCharArray();</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s_char.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        	<span class="comment">// 若该位置的数比后一个数小的话则和值减去该值</span></span><br><span class="line">            <span class="keyword">if</span>(h.get(s_char[i]) &lt; h.get(s_char[i + <span class="number">1</span>]))&#123;</span><br><span class="line">                sum -= h.get(s_char[i]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               sum += h.get(s_char[i]) ;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        sum += h.get(s_char[s_char.length - <span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -234,10 +227,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="/categories/leetcode//" class="article-tag-list-link color4">leetcode</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/leetcode/java//" class="article-tag-list-link color5">java</a>
         		</li>
       		
 		</ul>
@@ -292,7 +281,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2023/02/27/001%E5%9B%9E%E6%96%87%E6%95%B0/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2023/03/01/002%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -306,18 +295,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2023/03/01/002%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          罗马数字转整数
-        
-      </div>
-    </a>
   
-  
-    <a href="/2023/02/24/%E6%8E%A8%E8%8D%90%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%AD%E7%94%A8%E6%88%B7id%E9%87%8D%E6%96%B0%E7%BC%96%E7%A0%81/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">推荐算法数据集中用户id重新编码</div>
+    <a href="/2023/02/27/001%E5%9B%9E%E6%96%87%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">回文数判断</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -344,7 +324,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、要求"><span class="toc-number">1.</span> <span class="toc-text">1、要求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、题解"><span class="toc-number">2.</span> <span class="toc-text">2、题解</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、要求"><span class="toc-number">1.</span> <span class="toc-text">一、要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、题解"><span class="toc-number">2.</span> <span class="toc-text">二、题解</span></a></li></ol>
                     </div>
                 </span>
             </div>
